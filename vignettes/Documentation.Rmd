@@ -1,0 +1,45 @@
+---
+title: "Documentation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Documentation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ErasmusMCworkshop)
+```
+
+```{r countPersons}
+connectionDetails <- Eunomia::getEunomiaConnectionDetails()
+
+ErasmusMCworkshop::countPersons(
+  connectionDetails,
+  cdmSchema = "main"
+)
+```
+
+```{r countDrug}
+ErasmusMCworkshop::countDrug(
+  connectionDetails,
+  cdmSchema = "main",
+  drugName = "celecoxib"
+)
+```
+
+```{r countDrugCondition}
+ErasmusMCworkshop::countDrugCondition(
+  connectionDetails,
+  cdmSchema = "main",
+  drugName = "celecoxib",
+  conditionId = 192671
+)
+```

@@ -1,0 +1,25 @@
+Package: ErasmusMCworkshop
+Title: ErasmusMC Workshop for Package Development
+Version: 0.0.1
+Authors@R:
+  c(
+    person("Ger", "Inberg", , "ginberg@erasmusmc.nl", role = c("aut", "cre")),
+    person("Maarten", "van Kessel", role = c("aut")))
+Maintainers: person("Ger", "Inberg", "ginberg@erasmusmc.nl", role = c("aut", "cre"))
+Description: Workshop package for package development.
+License: Apache License 2.0
+Encoding: UTF-8
+RoxygenNote: 7.2.3
+Imports: 
+    checkmate,
+    DatabaseConnector,
+Suggests:
+    remotes,
+    Eunomia,
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown
+remotes:
+    OHDSI/Eunomia
+Config/testthat/edition: 3
+VignetteBuilder: knitr
