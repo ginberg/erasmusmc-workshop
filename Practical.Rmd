@@ -7,18 +7,19 @@ output: pdf_document
 
 # Prerequisits
 </br>
-It is assumed R, RTools, Rstudio and Java are installed accourding to the [Setting up the R environment](https://ohdsi.github.io/Hades/rSetup.html) instructions.
+It is assumed R, RTools, Rstudio and Java are installed accourding to the [*Setting up the R environment*](https://ohdsi.github.io/Hades/rSetup.html) instructions.
 
 The following packages should be installed:
-1. [checkmate](https://mllg.github.io/checkmate/)
-2. [DatabaseConnector](http://ohdsi.github.io/DatabaseConnector/)
-3. [remotes](https://remotes.r-lib.org/)
-4. [Eunomia](https://ohdsi.github.io/Eunomia/)
-5. [testthat](https://testthat.r-lib.org/)
-6. [knitr](https://yihui.org/knitr/)
-7. [rmarkdown](https://rmarkdown.rstudio.com/)
-8. [usethis](https://usethis.r-lib.org/)
-9. [roxygen2](https://roxygen2.r-lib.org/articles/rd.html)
+
+1. [*checkmate*](https://mllg.github.io/checkmate/)
+2. [*DatabaseConnector*](http://ohdsi.github.io/DatabaseConnector/)
+3. [*remotes*](https://remotes.r-lib.org/)
+4. [*Eunomia*](https://ohdsi.github.io/Eunomia/)
+5. [*testthat*](https://testthat.r-lib.org/)
+6. [*knitr*](https://yihui.org/knitr/)
+7. [*rmarkdown*](https://rmarkdown.rstudio.com/)
+8. [*usethis*](https://usethis.r-lib.org/)
+9. [*roxygen2*](https://roxygen2.r-lib.org/articles/rd.html)
 
 # Assignments
 ## 1. Create an R-project
