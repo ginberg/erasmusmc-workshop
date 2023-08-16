@@ -6,28 +6,39 @@ output: pdf_document
 ---
 
 # Prerequisits
-</br>
 It is assumed R, RTools, Rstudio and Java are installed accourding to the [*Setting up the R environment*](https://ohdsi.github.io/Hades/rSetup.html) instructions.
 
 The following packages should be installed:
 
 1. [*checkmate*](https://mllg.github.io/checkmate/)
-2. [*DatabaseConnector*](http://ohdsi.github.io/DatabaseConnector/)
-3. [*remotes*](https://remotes.r-lib.org/)
-4. [*Eunomia*](https://ohdsi.github.io/Eunomia/)
-5. [*testthat*](https://testthat.r-lib.org/)
-6. [*knitr*](https://yihui.org/knitr/)
-7. [*rmarkdown*](https://rmarkdown.rstudio.com/)
-8. [*usethis*](https://usethis.r-lib.org/)
-9. [*roxygen2*](https://roxygen2.r-lib.org/articles/rd.html)
+2. [*knitr*](https://yihui.org/knitr/)
+3. [*rmarkdown*](https://rmarkdown.rstudio.com/)
+4. [*Hades*](https://ohdsi.github.io/Hades/)
+    a. [*Eunomia*](https://ohdsi.github.io/Eunomia/)
+    b. [*DatabaseConnector*](http://ohdsi.github.io/DatabaseConnector/)
+5. [*devtools*](https://devtools.r-lib.org/)
+    a. [*testthat*](https://testthat.r-lib.org/)
+    b. [*roxygen2*](https://roxygen2.r-lib.org/)
+    c. [*remotes*](https://remotes.r-lib.org/)
+    d. [*usethis*](https://usethis.r-lib.org/)
+  
+```{r Installation, eval=FALSE}
+# Install packages from CRAN
+install.packages(c("devtools", "checkmate", "knitr", "rmarkdown", "DatabaseConnector"))
 
+# Install packages from OHDSI
+remotes::install_github("OHDSI/Eunomia")
+```
+  
 # Assignments
 ## 1. Create an R-project
-Create a new R Package project in Rstudio (File -> New Project...). Name the project <lastname>Workshop. I.e. **vankesselWorkshop** or **inbergWorkshop**
+1. Create a new R Package project in Rstudio (File -> New Project...). Name the project <firstname initial><Lastname>Workshop. I.e. **mVankesselWorkshop** or **gInbergWorkshop**.
+2. Remove the **hello.R** and **man/hello.Rd** files.
+3. Create a new R-file named **getCounts.R**.
 
 ## 2. Transform the following snippet into a function called **countPersons**
 The function should take the following parameters: *connectionDetails* and *cdmSchema*
-```{r, eval=FALSE}
+```{r snippet_2, eval=FALSE}
 library(DatabaseConnector)
 connection <- connect(connectionDetails)
 sql <- "SELECT COUNT(*) AS person_count
@@ -37,7 +48,7 @@ renderTranslateQuerySql(connection, sql, cdm = "main")
 ```
 
 You can use the following function definition as a start.
-```{r, eval=FALSE}
+```{r constructor_2, eval=FALSE}
 countPersons <- function(connectionDetails, cdmSchema) {
   # Your implementation
   result <- ...
@@ -45,23 +56,34 @@ countPersons <- function(connectionDetails, cdmSchema) {
 }
 ```
 
+Make sure you close the database connection regardless if the function throws an error or not.
+
 ## 3. Add function documentation to **countPersons**.
 You can use the `roxygen2` package.
 
 1. Add a function title.
 2. Add a function description.
 3. Add a parameter description for *connectionDetails* and *cdmSchema*.
-4. Add the function to the exported functions.
-5. Add a return description to what the function returns.
-6. Add a **working** example.
+4. Import `DatabaseConnector` and `checkmate` in your package.
+5. Add the function to the exported functions.
+6. Add a return description to what the function returns.
+7. Add a **working** example.
+8. Use `roxygen2::roxygenise()` to add the documentation files.
 
 ## 4. Add parameter checking for parameters *connectionDetails* and *cdmSchema* to **countPersons**.
-You can use the following functions: `checkmate::makeAssertCollection()`, `checkmate::assert_class()`, `checkmate::assert_character()`, ` checkmate::reportAssertions()`; of the `checkmate` package.
+You can use various functions of `checkmate`.
 
-## 5. Add the used dependencies to the DESCRIPTION file.
-You an use the `usethis::use_package()` function, of the `usethis` package.
+## 5. The DESCRIPTION file.
 
-## 6. Add unit testing using.
+1. Add the used dependencies
+2. Add a title in *Title Case*.
+3. Add an author.
+4. Add an maintainer.
+5. Add an encoding.
+
+You can use various functions of `usethis`.
+
+## 6. Add unit testing.
 You can setup the unit testing suite with `usethis::use_testthat()`, of the `usethis` package.
 
 You can use functions from `testthat` to test the functionality.
@@ -69,13 +91,20 @@ You can use functions from `testthat` to test the functionality.
 ## 7. Add package documentation vignettes.
 You can use `usethis::use_vignette()` to setup the vignette.
 
-In the vignette showcase how **countPersons** works.
+In the vignette showcase how **countPersons** works, and what the results mean.
 
+## 8. R-Check
+To verify that the package is installable and use able use `devtools::check()`. This may take 1-5 minutes. Investigate, and resolve any *Error*, *Warning*, and *NOTE* messages that you encounter.
 
 ## Optional
-### C. Transform the following snippet into a function called **countDrug**.
-Repeat steps 3-7 for this function.
-```{r, eval=FALSE}
+### A. Code review
+Review and compare your implementation with the  [*answers*](https://github.com/ginberg/erasmusmc-workshop/tree/answers).
+
+### B. Transform the following snippet into a function called **countDrug**.
+Repeat steps 3-8 for this function.
+
+Use the following snippet to create a function that counts the number of people that are taking a drug by name.
+```{r snippet_B, eval=FALSE}
 library(DatabaseConnector)
 connection <- connect(connectionDetails)
 sql <- "SELECT COUNT(DISTINCT(person_id)) AS person_count
@@ -91,7 +120,7 @@ WHERE LOWER(ingredient.concept_name) = 'celecoxib'
 renderTranslateQuerySql(connection, sql, cdm = "main")
 ```
 
-```{r, eval=FALSE}
+```{r constructor_B, eval=FALSE}
 countDrug <- function(connectionDetails, cdmSchema, drugName) {
   # Your implementation
   result <- ...
@@ -100,28 +129,36 @@ countDrug <- function(connectionDetails, cdmSchema, drugName) {
 ```
 
 
-### B. Transform the following snippet into a function called **countDrugCondition**
+### C. Transform the following snippet into a function called **countDrugCondition**
 Repeat steps 3-7 for this function.
-```{r, eval=FALSE}
+
+Use the following snippet to count the number of people, with a condition (by concept ID), taking a drug (by name).
+```{r snippet_C, eval=FALSE}
 library(DatabaseConnector)
+
 connection <- connect(connectionDetails)
 
-sql <- "SELECT COUNT(DISTINCT(person_id)) AS person_count
+sql <- "SELECT COUNT(*) AS diagnose_count
 FROM @cdm.drug_era
 INNER JOIN @cdm.concept ingredient
   ON drug_concept_id = ingredient.concept_id
+INNER JOIN @cdm.condition_occurrence
+  ON condition_start_date >= drug_era_start_date
+    AND condition_start_date <= drug_era_end_date
+INNER JOIN @cdm.concept_ancestor
+  ON condition_concept_id = descendant_concept_id
 WHERE LOWER(ingredient.concept_name) = 'celecoxib'
   AND ingredient.concept_class_id = 'Ingredient'
-  AND ingredient.standard_concept = 'S';"
+  AND ingredient.standard_concept = 'S'
+  AND ancestor_concept_id = 192671;"
 
 renderTranslateQuerySql(connection, sql, cdm = "main")
 ```
 
-```{r}
+```{r constructor_C, eval=FALSE}
 countDrugCondition <- function(connectionDetails, cdmSchema, drugName, conditionId) {
   # Your implementation
   result <- ...
   return(result)
 }
 ```
-
