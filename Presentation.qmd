@@ -170,7 +170,7 @@ usethis::create_package("fooPackage")
 usethis::use_author(given = "Ger", family = "Inberg", role = c("aut", "cre"))
 usethis::use_apache_license()
 usethis::use_package("checkmate", type = "Imports")
-usethis::use_dev_package(remote = "OHDSI/Eunomia", type = "Suggests")
+usethis::use_dev_package("Eunomia", remote = "OHDSI/Eunomia", type = "Suggests")
 ```
 
 ## DESCRIPTION on CRAN
@@ -204,9 +204,15 @@ importFrom(generics,setdiff)
 
 ## Unit Testing
 
+### initialize testthat
+
+```{r init, echo=TRUE, eval=FALSE}
+usethis::use_testthat()
+```
+
 ### setup.R
 
-Code in the setup is run at the beginning of each test file.
+Code in setup.R is run at the beginning of your tests.
 
 ```{r setup, echo=TRUE, eval=TRUE}
 connectionDetails <- Eunomia::getEunomiaConnectionDetails()
@@ -242,7 +248,7 @@ test_that("Fetch n persons", {
 
 ### teardown.R
 
-Code is run upon completion of a test file, even when there is an error.
+Code in teardown.R is run upon completion of your tests, even when there is an error.
 
 ```{r teardown, echo=TRUE, eval=TRUE}
 DatabaseConnector::disconnect(connection)

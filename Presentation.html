@@ -559,7 +559,7 @@ RoxygenNote: 7.2.3</code></pre>
 <span id="cb15-2"><a href="#cb15-2"></a>usethis<span class="sc">::</span><span class="fu">use_author</span>(<span class="at">given =</span> <span class="st">"Ger"</span>, <span class="at">family =</span> <span class="st">"Inberg"</span>, <span class="at">role =</span> <span class="fu">c</span>(<span class="st">"aut"</span>, <span class="st">"cre"</span>))</span>
 <span id="cb15-3"><a href="#cb15-3"></a>usethis<span class="sc">::</span><span class="fu">use_apache_license</span>()</span>
 <span id="cb15-4"><a href="#cb15-4"></a>usethis<span class="sc">::</span><span class="fu">use_package</span>(<span class="st">"checkmate"</span>, <span class="at">type =</span> <span class="st">"Imports"</span>)</span>
-<span id="cb15-5"><a href="#cb15-5"></a>usethis<span class="sc">::</span><span class="fu">use_dev_package</span>(<span class="at">remote =</span> <span class="st">"OHDSI/Eunomia"</span>, <span class="at">type =</span> <span class="st">"Suggests"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-5"><a href="#cb15-5"></a>usethis<span class="sc">::</span><span class="fu">use_dev_package</span>(<span class="st">"Eunomia"</span>, <span class="at">remote =</span> <span class="st">"OHDSI/Eunomia"</span>, <span class="at">type =</span> <span class="st">"Suggests"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="description-on-cran" class="slide level2">
@@ -589,14 +589,18 @@ importFrom(generics,setdiff)</code></pre>
 </section>
 <section id="unit-testing" class="slide level2">
 <h2>Unit Testing</h2>
-<h3 id="setup.r">setup.R</h3>
-<p>Code in the setup is run at the beginning of each test file.</p>
+<h3 id="initialize-testthat">initialize testthat</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>connectionDetails <span class="ot">&lt;-</span> Eunomia<span class="sc">::</span><span class="fu">getEunomiaConnectionDetails</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>usethis<span class="sc">::</span><span class="fu">use_testthat</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<h3 id="setup.r">setup.R</h3>
+<p>Code in setup.R is run at the beginning of your tests.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>connectionDetails <span class="ot">&lt;-</span> Eunomia<span class="sc">::</span><span class="fu">getEunomiaConnectionDetails</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>attempting to download GiBleed</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>connection <span class="ot">&lt;-</span> DatabaseConnector<span class="sc">::</span><span class="fu">connect</span>(connectionDetails)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>connection <span class="ot">&lt;-</span> DatabaseConnector<span class="sc">::</span><span class="fu">connect</span>(connectionDetails)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="unit-testing-1" class="slide level2">
@@ -604,43 +608,43 @@ importFrom(generics,setdiff)</code></pre>
 <h3 id="test-foo.r">test-foo.R</h3>
 <p>Use testthat to create your test cases.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">library</span>(testthat)</span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">library</span>(DatabaseConnector)</span>
-<span id="cb21-3"><a href="#cb21-3"></a></span>
-<span id="cb21-4"><a href="#cb21-4"></a><span class="fu">test_that</span>(<span class="st">"Normal use"</span>, {</span>
-<span id="cb21-5"><a href="#cb21-5"></a>  <span class="fu">expect_equal</span>(<span class="fu">foo</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dv">1</span> <span class="sc">*</span> <span class="dv">2</span>)</span>
-<span id="cb21-6"><a href="#cb21-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">library</span>(testthat)</span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">library</span>(DatabaseConnector)</span>
+<span id="cb22-3"><a href="#cb22-3"></a></span>
+<span id="cb22-4"><a href="#cb22-4"></a><span class="fu">test_that</span>(<span class="st">"Normal use"</span>, {</span>
+<span id="cb22-5"><a href="#cb22-5"></a>  <span class="fu">expect_equal</span>(<span class="fu">foo</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dv">1</span> <span class="sc">*</span> <span class="dv">2</span>)</span>
+<span id="cb22-6"><a href="#cb22-6"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 😸</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">test_that</span>(<span class="st">"Fetch n persons"</span>, {</span>
-<span id="cb23-2"><a href="#cb23-2"></a>  res <span class="ot">&lt;-</span> <span class="fu">renderTranslateQuerySql</span>(</span>
-<span id="cb23-3"><a href="#cb23-3"></a>    <span class="at">connection =</span> connection,</span>
-<span id="cb23-4"><a href="#cb23-4"></a>    <span class="at">sql =</span> <span class="st">"SELECT COUNT(*) FROM person;"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb23-5"><a href="#cb23-5"></a>    <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
-<span id="cb23-6"><a href="#cb23-6"></a>    <span class="fu">unname</span>()</span>
-<span id="cb23-7"><a href="#cb23-7"></a>  </span>
-<span id="cb23-8"><a href="#cb23-8"></a>  <span class="fu">expect_equal</span>(res, <span class="dv">2694</span>)</span>
-<span id="cb23-9"><a href="#cb23-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">test_that</span>(<span class="st">"Fetch n persons"</span>, {</span>
+<span id="cb24-2"><a href="#cb24-2"></a>  res <span class="ot">&lt;-</span> <span class="fu">renderTranslateQuerySql</span>(</span>
+<span id="cb24-3"><a href="#cb24-3"></a>    <span class="at">connection =</span> connection,</span>
+<span id="cb24-4"><a href="#cb24-4"></a>    <span class="at">sql =</span> <span class="st">"SELECT COUNT(*) FROM person;"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb24-5"><a href="#cb24-5"></a>    <span class="fu">unlist</span>() <span class="sc">|&gt;</span></span>
+<span id="cb24-6"><a href="#cb24-6"></a>    <span class="fu">unname</span>()</span>
+<span id="cb24-7"><a href="#cb24-7"></a>  </span>
+<span id="cb24-8"><a href="#cb24-8"></a>  <span class="fu">expect_equal</span>(res, <span class="dv">2694</span>)</span>
+<span id="cb24-9"><a href="#cb24-9"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Test passed 😀</code></pre>
+<pre><code>Test passed 🎊</code></pre>
 </div>
 </div>
 </section>
 <section id="unit-testing-2" class="slide level2">
 <h2>Unit Testing</h2>
 <h3 id="teardown.r">teardown.R</h3>
-<p>Code is run upon completion of a test file, even when there is an error.</p>
+<p>Code in teardown.R is run upon completion of your tests, even when there is an error.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">disconnect</span>(connection)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>DatabaseConnector<span class="sc">::</span><span class="fu">disconnect</span>(connection)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="validating-your-package" class="slide level2">
 <h2>Validating your package</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>devtools<span class="sc">::</span><span class="fu">check</span>()</span>
-<span id="cb26-2"><a href="#cb26-2"></a>devtools<span class="sc">::</span><span class="fu">check_win_devel</span>()</span>
-<span id="cb26-3"><a href="#cb26-3"></a>devtools<span class="sc">::</span><span class="fu">check_rhub</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>devtools<span class="sc">::</span><span class="fu">check</span>()</span>
+<span id="cb27-2"><a href="#cb27-2"></a>devtools<span class="sc">::</span><span class="fu">check_win_devel</span>()</span>
+<span id="cb27-3"><a href="#cb27-3"></a>devtools<span class="sc">::</span><span class="fu">check_rhub</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <iframe src="https://www.r-project.org/nosvn/R.check/r-release-windows-x86_64/dplyr-00check.html" height="70%" width="100%">
 </iframe>
@@ -662,7 +666,7 @@ git push</code></pre>
 <section id="releasing-your-package-to-cran" class="slide level2">
 <h2>Releasing your package to CRAN</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>devtools<span class="sc">::</span><span class="fu">release</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>devtools<span class="sc">::</span><span class="fu">release</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The package release process will:</p>
 <ul>
